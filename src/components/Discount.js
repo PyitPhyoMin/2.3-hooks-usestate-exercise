@@ -15,18 +15,18 @@ const initialValues = {
   discount: 0,
 };
 
-let checkedBoxState = false;
 
 function Discount() {
   const [product, setProduct] = useState(initialValues);
-
+  const [checkedBox, setCheckedBox] = useState();
+  
   //Handler for checkbox change event.[PhyoMin]
   const handlerLock = (e) => {
-    e.target.checked ? (checkedBoxState = true) : (checkedBoxState = false);
+    e.target.checked ? (setCheckedBox(true)) : (setCheckedBox(false));
   };
 
   const handlerPlus = () => {
-    if (checkedBoxState === false) {
+    if (checkedBox !== true) {
       setProduct((prevProduct) => {return {...prevProduct, count: prevProduct.count + 1,
                                     discount: prevProduct.count + 1 >= 5 ? 20 : 0,
         };
@@ -35,7 +35,7 @@ function Discount() {
   };
   //Handler for minus button click and prevent negative number.[PhyoMin]
   const handlerMinus = () => {
-    if (checkedBoxState === false) {
+    if (checkedBox !== true) {
       setProduct((prevProduct) => {return {...prevProduct, 
     count: prevProduct.count - 1 < 0 ? 0 : prevProduct.count - 1, discount: prevProduct.count - 1 >= 5 ? 20 : 0,
         };
@@ -44,7 +44,7 @@ function Discount() {
   };
   //Handler for reset button.[PhyoMin]
   const handlerReset = () => setProduct(initialValues);
-
+  
   return (
     <>
       <h2>{product.name}</h2>
